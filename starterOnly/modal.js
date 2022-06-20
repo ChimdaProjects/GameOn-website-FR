@@ -39,6 +39,7 @@ function closeModal() {
   // close modal confirmation
   modalMsg.style.display="none";
   removeErrorsMsg();
-  clearValuesForm()
+  clearValuesForm();
+  //location.reload();
 }
 

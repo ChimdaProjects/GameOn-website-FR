@@ -79,8 +79,14 @@ checkEmail = false;
 checkBirthDate = false;
 checkQuantity = false;
 checkLocations = false;
-
 checkCgu = false;
+
+const msgFirst = document.getElementById('dataFirst');
+const divLast = document.getElementById('dataLast');
+const divEmail = document.getElementById('dataEmail');
+const divBirthDate = document.getElementById('dataBirth');
+const divContest = document.getElementById('dataContest');
+const divCGU = document.getElementById('dataCGU');
 
 /**
  * Cette fonction permet de vérifier toutes les valeurs saisies ou choisies par l'utilisateur
@@ -92,7 +98,7 @@ function checkValuesForm(e) {
     switch(e.target.id) {
         case 'first':
             console.log('on est dans le prénom');  
-            const msgFirst = document.getElementById('dataFirst');
+            
             console.log('prénom saisie : ', valueField);
             if (valueField.length > 1 && regexName.test(valueField)) {
                 msgFirst.setAttribute('data-error-visible', 'false');
@@ -106,7 +112,7 @@ function checkValuesForm(e) {
             break;
         
         case 'last':
-            const divLast = document.getElementById('dataLast');
+            
             console.log('nom saisi : ', valueField);
             if (valueField.length > 1 && regexName.test(valueField)) {
                 divLast.setAttribute('data-error-visible', 'false');
@@ -120,7 +126,7 @@ function checkValuesForm(e) {
             break;
 
         case 'email':
-            const divEmail = document.getElementById('dataEmail');
+            
             console.log('email saisi : ', valueField);
             // si la valeur saisie est vide
             if (valueField!=='' && regexEmail.test(valueField)) {
@@ -136,7 +142,7 @@ function checkValuesForm(e) {
     
         case 'birthdate':
             console.log('date entrée : ', valueField)
-            const divBirthDate = document.getElementById('dataBirth');
+            
             let birthdate = new Date(valueField);
             let birthdatepicked = birthdate.toLocaleDateString();
             console.log('birthdate', birthdate.toLocaleDateString())
@@ -154,7 +160,7 @@ function checkValuesForm(e) {
             break;
      
         case 'quantity':
-            const divContest = document.getElementById('dataContest')
+            
             console.log('quantity', valueField);
             if( !isNaN(valueField) && regexNumbers.test(valueField)) {
                 divContest.setAttribute('data-error-visible', 'false');
@@ -169,7 +175,7 @@ function checkValuesForm(e) {
             break;
 
         case 'checkbox1':
-            const divCGU = document.getElementById('dataCGU');
+            
             
             if (checkboxCGU.checked) {
                 console.log('checked CGU');
@@ -193,7 +199,7 @@ for (let location of locations) {
     location.addEventListener('change', checkRadiosLocations);    
     function checkRadiosLocations() {
         console.log('on est dans check radio')
-        const divLocations = document.getElementById('dataLocations');
+       
     
         if(location.checked) {
             console.log('ville selectionnée', location.value);
@@ -234,7 +240,9 @@ function openModalConfirmation () {
 /**
  * Cette fonction permet la soumission du formulaire
  */
-function validate () {
+form.addEventListener('submit', handleSubmitForm)
+function handleSubmitForm (e) {
+    e.preventDefault();
     console.log('on est ds validate')
    /*alert( checkLast );
    alert( checkFirst );
@@ -251,16 +259,43 @@ function validate () {
         checkLocations &&
         checkCgu ) {
         console.log('submit form');
-        alert('formulaire soumis');
-        removeErrorsMsg()
-        clearValuesForm();
-        
+        //alert('formulaire soumis');
         closeModal();
+        removeErrorsMsg();
         openModalConfirmation();
         //form.submit();
         return false;
     } else {
-        alert('Merci de saisir des informations correctes');
+        if(!checkLast) {
+            divLast.setAttribute('data-error-visible', 'true');
+            divLast.setAttribute('data-error', errorsMsg.last);
+        }
+        if(!checkFirst) {
+            msgFirst.setAttribute('data-error-visible', 'true');
+            msgFirst.setAttribute('data-error', errorsMsg.first);
+        }
+        if(!checkEmail) {
+            divEmail.setAttribute('data-error-visible', 'true');
+            divEmail.setAttribute('data-error', errorsMsg.email);
+        }
+        if(!checkBirthDate) {
+            divBirthDate.setAttribute('data-error-visible', 'true');
+            divBirthDate.setAttribute('data-error', errorsMsg.birthdate);
+
+        }
+        if(!checkQuantity) {
+            divContest.setAttribute('data-error-visible', 'true');
+            divContest.setAttribute('data-error', errorsMsg.quantity);
+
+        }
+        if(!checkLocations) {
+            divLocations.setAttribute('data-error-visible', 'true');
+        divLocations.setAttribute('data-error', errorsMsg.location);
+        }
+        if(!checkCgu) {
+            divCGU.setAttribute('data-error-visible', 'true');
+            divCGU.setAttribute('data-error', errorsMsg.checkbox);
+        }
         return false;
     }
         
