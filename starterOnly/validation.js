@@ -170,6 +170,7 @@ function checkValuesForm(e) {
 
         case 'checkbox1':
             const divCGU = document.getElementById('dataCGU');
+            
             if (checkboxCGU.checked) {
                 console.log('checked CGU');
                 divCGU.setAttribute('data-error-visible', 'false');
@@ -253,9 +254,10 @@ function validate () {
         alert('formulaire soumis');
         removeErrorsMsg()
         clearValuesForm();
-        //form.submit();
+        
         closeModal();
         openModalConfirmation();
+        //form.submit();
         return false;
     } else {
         alert('Merci de saisir des informations correctes');
