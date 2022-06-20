@@ -28,5 +28,7 @@ modalBtnClosed.forEach((btn)=> btn.addEventListener("click", closeModal));
 // close modal form
 function closeModal() {
   modalbg.style.display="none";
+  removeErrorsMsg();
+  clearValuesForm()
 }
 

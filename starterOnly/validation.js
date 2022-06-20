@@ -23,6 +23,7 @@ const email = document.getElementById('email');
 const birthdayDate = document.getElementById('birthdate');
 // Nombre de tournois participé
 const quantityContest = document.getElementById('quantity');
+const divLocations = document.getElementById('dataLocations');
 //Choix de la ville 1: New-York
 const location1 = document.getElementById('location1');
 //Choix de la ville 2: San Francisco
@@ -39,14 +40,18 @@ const location6 = document.getElementById('location6');
 const checkboxCGU = document.getElementById('checkbox1');
 // Checkbox events
 const checkboxEvents = document.getElementById('checbox2');
+// objet centralisant les erreurs affichés dans data-error
+const errorsMsg = {
+    'first': 'Veuillez entrer 2 caractères ou plus pour le champ du prénom',
+    'last': 'Veuillez entrer 2 caractères ou plus pour le champ du nom',
+    'email':'Veuillez saisir un email valide',
+    'birthdate':'Vous devez entrer une date de naissance',
+    'quantity':'Veuillez saisir un nombre entre 0 et 99',
+    'location':'Vous devez choisir une option',
+    'checkbox': 'Vous devez vérifier que vous acceptez les termes et conditions',
 
-
-// Validation du formulaire
-
-const validate = (e) => {
-    e.preventDefault();
-    console.log('submit form');
 }
+
 
 isValid = false; 
 
@@ -54,42 +59,66 @@ isValid = false;
 // regex for first and last
 const regexName = /[^ ][a-zA-Z '\-éèêëçäàûüçà]*[^ ]$/ ;
 // regex for email
-const regexEmail = /[a-z0-9!#$%&’*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&’*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+const regexEmail = /^([a-z0-9_\.-]+\@[\da-z\.-]+\.[a-z\.]{2,6})$/;
 //regex for date of birth
-const regexBirthDate = /\b(\d{2,4})(\d{1,2})(\d{1,2})\b/;
+//const regexBirthDate = /\b(\d{4})[-/.](\d{2})[-/.](\d{2})\b/;
+const regexBirthDate =/\b(\d{4})[-/.](\d{2})[-/.](\d{2})\b/;
+// /\s+(?:19\d{2}|20[01][0-9]|2022)[-/.](?:0[1-9]|1[012])[-/.](?:0[1-9]|[12][0-9]|3[01])\b/
+//regex pour les nombres entiers
+const regexNumbers = /^\d{1,2}$/;
 
-// Vérification du prénom
+// Ecouteurs d'évènements
 firstName.addEventListener('change', checkFirstName);
+lastName.addEventListener('change', checkLastName);
+email.addEventListener('change', checkEmail);
+birthdayDate.addEventListener('change', checkBirthDate);
+quantityContest.addEventListener('change', checkNumberOfContest);
+
+divLocations.addEventListener('change', checkRadiosLocations);
+checkboxCGU.addEventListener('change', checkCGU);
 
 
+
+/**
+ * Cette fonction permet de vérifier le prénom
+ * @param {Event} e 
+ * @returns 
+ */
 function checkFirstName(e) {
     const valueFirst = e.target.value;
     const divFirst = document.getElementById('dataFirst');
     console.log('prénom saisie : ', valueFirst);
     if (valueFirst.length > 1 && regexName.test(valueFirst)) {
-        return isValid =true;
+        divFirst.setAttribute('data-error-visible', 'false');
+        return true;
     } else {
         divFirst.setAttribute('data-error-visible', 'true');
-        return isValid=false;
+        divFirst.setAttribute('data-error', errorsMsg.first);
+        return false;
     }
 
 }
-// vérification du nom
-lastName.addEventListener('change', checkLastName);
+
+/**
+ * Cette fonction permet de vérifier le nom
+ * @param {Event} e 
+ * @returns 
+ */
 function checkLastName (e) {
     const valueLast = e.target.value;
     const divLast = document.getElementById('dataLast');
     console.log('nom saisi : ', valueLast);
     if (valueLast.length > 1 && regexName.test(valueLast)) {
-        return isValid =true;
+        divLast.setAttribute('data-error-visible', 'false');
+        return true;
     } else {
         divLast.setAttribute('data-error-visible', 'true');
-        return isValid=false;
+        divLast.setAttribute('data-error', errorsMsg.last);
+        return false;
     }
 }
 
-// vérification de l'email
-email.addEventListener('change', checkEmail);
+
 /**
  * Cette fonction permet de vérifier l'adresse mail
  * @param {Event} e 
@@ -100,16 +129,15 @@ function checkEmail(e) {
     const divEmail = document.getElementById('dataEmail');
     console.log('email saisi : ', valueEmail);
     // si la valeur saisie est vide
-    if (!valueEmail && regexEmail.test(valueEmail)) {
-        return isValid = true;
+    if (valueEmail!=='' && regexEmail.test(valueEmail)) {
+        divEmail.setAttribute('data-error-visible', 'false');
+        return true;
     } else {
         divEmail.setAttribute('data-error-visible', 'true');
-        return isValid=false;
+        divEmail.setAttribute('data-error', errorsMsg.email);
+        return false;
     }
 }
-
-// vérification de la date de naissance 
-birthdayDate.addEventListener('change', checkBirthDate);
 
 /**
  * Cette fonction permet de vérifier la date de naissance
@@ -119,44 +147,107 @@ function checkBirthDate (e) {
     const valueBirthDate = e.target.value;
     console.log('date entrée : ', valueBirthDate)
     const divBirthDate = document.getElementById('dataBirth');
-    if( regexBirthDate.test(valueBirthDate) && valueBirthDate > NetworkInformation() ) {
-        return isValid = true;
+    
+    if( regexBirthDate.test(valueBirthDate) ) {
+        divBirthDate.setAttribute('data-error-visible', 'false');
+        return  true;
     } else {
         divBirthDate.setAttribute('data-error-visible', 'true');
-        return isValid=false;
+        divBirthDate.setAttribute('data-error', errorsMsg.birthdate);
+        return false;
     }
 
 }
 
-// vérification du nombre de tournoi
-quantityContest.addEventListener('change', checkNumberOfContest);
+/**
+ * Cette fonction permet de vérifier le nombre de tournoi
+ * @param {Event} e event
+ */
+
 function checkNumberOfContest(e) {
     const valueQuantity = e.target.value;
     const divContest = document.getElementById('dataContest')
-    if(valueQuantity >= 0 && valueQuantity <= 99) {
-        return isValid = true;
+    
+    if( !isNaN(valueQuantity) && regexNumbers.test(valueQuantity)) {
+        divContest.setAttribute('data-error-visible', 'false');
+        return true;
     } else {
         divContest.setAttribute('data-error-visible', 'true');
-        return isValid=false;
+        divContest.setAttribute('data-error', errorsMsg.quantity);
+
+        return false;
     }
 }
 
-// vérification du choix de la ville : obligation d'un bouton radio selectionné
-
-const divLocations = document.getElementById('dataLocations');
-divLocations.addEventListener('change', checkRadiosLocations);
-
+/**
+ * Cette fonction permet de vérifier si une ville est bien choisie
+ */
 function checkRadiosLocations(e) {
-    const radios = document.querySelectorAll('input[name="location"]');
+    const radios = document.querySelectorAll('.checkbox-input[name="location"]');
+    console.log('radios', radios);
+    
    for (let radio of radios) {
-    if(radio.checked) {
-        console.log('ville selectionnée', radio.value);
-        return isValidRadio=true;
-   }
-}
-if (isValidRadio == false) {
-    divLocations.setAttribute('data-error-visible', 'true');
-}
+        if(radio.checked) {
+            console.log('ville selectionnée', radio.value);
+            divLocations.setAttribute('data-error-visible', 'false');
+            return true;
+        } else {
+        divLocations.setAttribute('data-error-visible', 'true');
+        divLocations.setAttribute('data-error', errorsMsg.location);
+        return false;
+        }
+    }
 }
 
-//const radios = document.querySelector('input[radio]:checked');
+/**
+ * Cette fonction permet de vérifier si la checkbox CGU est cochée
+ */
+
+function checkCGU(e) {
+    const valueChecked = e.target.value;
+    const divCGU = document.getElementById('dataCGU');
+    if (checkboxCGU.checked) {
+        console.log('checked CGU');
+        divCGU.setAttribute('data-error-visible', 'false');
+        return true;
+        
+    } else {
+        divCGU.setAttribute('data-error-visible', 'true');
+        divCGU.setAttribute('data-error', errorsMsg.checkbox);
+        console.log('pas checked CGU');
+        return false;
+
+    }
+}
+/**
+ * Cette fonction permet de supprimer les messages d'erreurs
+ */
+function removeErrorsMsg() {
+    let alertMessages = document.getElementsByClassName("formData");
+    for (let alert of alertMessages) {
+        alert.setAttribute('data-error-visible', 'false');
+    }
+}
+/**
+ * Cette fonction permet de vider les champs du formulaire
+ */
+function clearValuesForm() {
+    let inputsElt = document.getElementsByTagName('input');
+    console.log('input elements ', inputsElt)
+    for (let input of inputsElt) {
+        input.value = "";
+    }
+}
+/**
+ * Cette fonction permet de valider le formulaire
+ */
+function validate (e) {
+    e.preventDefault();
+    if (checkFirstName()&& checkLastName() && checkEmail() && checkBirthDate() && checkNumberOfContest() && checkRadiosLocations() && checkCGU()) {
+        console.log('submit form');
+        alert('Votre inscription est validée.')
+    } else {
+        alert('Merci de saisir des informations correctes')
+    }
+        
+}
