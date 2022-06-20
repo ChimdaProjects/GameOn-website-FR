@@ -12,6 +12,12 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalBtnClosed = document.querySelectorAll(".close");
+// confirmation reservation
+const modalMsg = document.querySelector(".confirmation");
+const closeBtnConf = document.getElementById('close-conf');
+
+// not display confirmation modal
+modalMsg.style.display="none";
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -24,10 +30,14 @@ function launchModal() {
 // issue #1: fermer la modale 
 // close modal event
 modalBtnClosed.forEach((btn)=> btn.addEventListener("click", closeModal));
+// close modal message confirmation
+closeBtnConf.forEach((btn)=> btn.addEventListener("click", closeModal));
 
 // close modal form
 function closeModal() {
   modalbg.style.display="none";
+  // close modal confirmation
+  modalMsg.style.display="none";
   removeErrorsMsg();
   clearValuesForm()
 }
