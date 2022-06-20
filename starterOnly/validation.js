@@ -24,12 +24,14 @@ const birthdayDate = document.getElementById('birthdate');
 // Nombre de tournois participé
 const quantityContest = document.getElementById('quantity');
 // Les input ayant l'attribut name = location (pour avoir accès à toutes les locations)
-const locations = document.querySelectorAll('input[type="radio"]');
+const locations = document.querySelectorAll('input[name="location"]');
 console.log('locations element', locations);
 // Checkbox CGU
 const checkboxCGU = document.getElementById('checkbox1');
 // Checkbox events
 const checkboxEvents = document.getElementById('checbox2');
+
+const divLocations = document.getElementById('dataLocations');
 
 // objet centralisant les erreurs affichés dans data-error
 const errorsMsg = {
@@ -53,13 +55,22 @@ const regexBirthDate =/\b(\d{4})[-/.](\d{2})[-/.](\d{2})\b/;
 //regex pour les nombres entiers
 const regexNumbers = /^\d{1,2}$/;
 
-const inputsForm = document.querySelectorAll('input');
+//const inputsForm = document.querySelectorAll('input');
+//console.log('inputs form', inputsForm);
 /**
  * On ajoute un écouteur d'évènements sur tous les inputs du formulaire.
  */
-inputsForm.forEach(e => {
+
+const inputsForm = [
+    firstName, lastName, email, birthdayDate, quantityContest,checkboxCGU
+]
+for( let input of inputsForm) {
+    input.addEventListener('change', checkValuesForm);
+}
+
+/*inputsForm.forEach(e => {
     e.addEventListener('change', checkValuesForm)
-});
+});*/
 
 // variables permettant de savoir si un champ du formulaire est rempli correctement.
 checkFirst=false;
@@ -68,16 +79,17 @@ checkEmail = false;
 checkBirthDate = false;
 checkQuantity = false;
 checkLocations = false;
+
 checkCgu = false;
 
 /**
  * Cette fonction permet de vérifier toutes les valeurs saisies ou choisies par l'utilisateur
- * @param {Event} e 
+ * @param {Event} e
  * @returns 
  */
 function checkValuesForm(e) {
     const valueField = e.target.value;
-    switch(e.target.name) {
+    switch(e.target.id) {
         case 'first':
             console.log('on est dans le prénom');  
             const msgFirst = document.getElementById('dataFirst');
@@ -91,7 +103,7 @@ function checkValuesForm(e) {
                 checkFirst=false;
             };
             console.log('checkfirst :', checkFirst);
-            return checkFirst;
+            break;
         
         case 'last':
             const divLast = document.getElementById('dataLast');
@@ -105,7 +117,7 @@ function checkValuesForm(e) {
                 checkLast = false;
             };
             console.log('checkfirst :', checkFirst);
-            return checkLast;
+            break;
 
         case 'email':
             const divEmail = document.getElementById('dataEmail');
@@ -119,8 +131,8 @@ function checkValuesForm(e) {
                 divEmail.setAttribute('data-error', errorsMsg.email);
                 checkEmail = false;
             };
-            console.log('checkEmail : ', checkEmail)
-            return checkEmail;
+            console.log('checkEmail : ', checkEmail);
+            break;
     
         case 'birthdate':
             console.log('date entrée : ', valueField)
@@ -139,7 +151,7 @@ function checkValuesForm(e) {
                 checkBirthDate = false;
             };
             console.log('check birthdate :' , checkBirthDate);
-            return checkBirthDate;
+            break;
      
         case 'quantity':
             const divContest = document.getElementById('dataContest')
@@ -154,25 +166,9 @@ function checkValuesForm(e) {
                 checkQuantity= false;
             };
             console.log('check quantity : ', checkQuantity);
-            return checkQuantity;
+            break;
 
-        case 'location':
-                const divLocations = document.getElementById('dataLocations');
-                for (let location of locations) {
-                    if(location.checked) {
-                        console.log('ville selectionnée', location.value);
-                        console.log('location checked = ',location.checked)
-                        divLocations.setAttribute('data-error-visible', 'false');
-                        return checkLocations = true;
-                    } else {
-                        divLocations.setAttribute('data-error-visible', 'true');
-                        divLocations.setAttribute('data-error', errorsMsg.location);
-                        checkLocations = false;
-                    } ;
-                };
-                console.log('check locations : ', checkLocations);
-                return checkLocations;
-        case 'cgu':
+        case 'checkbox1':
             const divCGU = document.getElementById('dataCGU');
             if (checkboxCGU.checked) {
                 console.log('checked CGU');
@@ -186,11 +182,32 @@ function checkValuesForm(e) {
                 checkCgu = false;
             };
             console.log('check cgu ', checkCgu );
-            return checkCgu;
+            break;
 
         default:console.log('ca ne va pas du tout !')
     }
 }
+
+for (let location of locations) {
+    location.addEventListener('change', checkRadiosLocations);    
+    function checkRadiosLocations() {
+        console.log('on est dans check radio')
+        const divLocations = document.getElementById('dataLocations');
+    
+        if(location.checked) {
+            console.log('ville selectionnée', location.value);
+            divLocations.setAttribute('data-error-visible', 'false');
+             checkLocations = true;
+        } else {
+        divLocations.setAttribute('data-error-visible', 'true');
+        divLocations.setAttribute('data-error', errorsMsg.location);
+            checkLocations= false;
+        } ;
+    console.log('check location', checkLocations) ;       
+    }
+
+}
+console.log('check location ', checkLocations);   
 
 function removeErrorsMsg() {
     let alertMessages = document.getElementsByClassName("formData");
@@ -216,9 +233,15 @@ function openModalConfirmation () {
 /**
  * Cette fonction permet la soumission du formulaire
  */
-function validate (e) {
+function validate () {
     console.log('on est ds validate')
-    e.preventDefault();
+   /*alert( checkLast );
+   alert( checkFirst );
+   alert(checkEmail );
+   alert( checkBirthDate );
+   alert( checkQuantity );
+   alert(checkLocations );
+   alert(checkCgu );*/
     if (checkLast && 
         checkFirst && 
         checkEmail &&
@@ -227,11 +250,16 @@ function validate (e) {
         checkLocations &&
         checkCgu ) {
         console.log('submit form');
-        openModalConfirmation()
+        alert('formulaire soumis');
+        removeErrorsMsg()
         clearValuesForm();
-        form.submit();
+        //form.submit();
+        closeModal();
+        openModalConfirmation();
+        return false;
     } else {
         alert('Merci de saisir des informations correctes');
+        return false;
     }
         
 }

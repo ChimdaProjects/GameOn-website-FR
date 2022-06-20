@@ -31,7 +31,7 @@ function launchModal() {
 // close modal event
 modalBtnClosed.forEach((btn)=> btn.addEventListener("click", closeModal));
 // close modal message confirmation
-closeBtnConf.forEach((btn)=> btn.addEventListener("click", closeModal));
+closeBtnConf.addEventListener("click", closeModal);
 
 // close modal form
 function closeModal() {
