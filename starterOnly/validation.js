@@ -226,11 +226,17 @@ function removeErrorsMsg() {
  * Cette fonction permet de vider les champs du formulaire
  */
 function clearValuesForm() {
-    let inputsElt = document.getElementsByTagName('input');
-    console.log('input elements ', inputsElt)
-    for (let input of inputsElt) {
-        input.value = "";
+    firstName.value="";
+    lastName.value="";
+    email.value="";
+    birthdayDate.value="";
+    quantityContest.value="";
+    for (let location of locations) {
+        location.checked = false;
     }
+    checkboxCGU.checked =false;
+
+
 }
 
 function openModalConfirmation () {
@@ -260,9 +266,11 @@ function handleSubmitForm (e) {
         checkCgu ) {
         console.log('submit form');
         //alert('formulaire soumis');
-        closeModal();
+        closeModalSubmit();
         removeErrorsMsg();
+        clearValuesForm();
         openModalConfirmation();
+        
         //form.submit();
         return false;
     } else {

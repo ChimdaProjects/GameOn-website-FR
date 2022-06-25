@@ -69,15 +69,28 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-  .topnav a {display: none;}
+  #myTopnav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .topnav a {
+    display: none;
+  }
   .topnav a.icon {
     float: right;
     display: block;
   }
+  .main-navbar {
+    width: 100%;
+   
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {
+    position: relative;
+  }
   .topnav.responsive .icon {
     position: absolute;
     right: 0;
@@ -93,11 +106,13 @@ img {
 
 
  @media screen and (max-width: 540px) {
-  .topnav a {display: none;}
+  .topnav a {
+    display: none;
+  }
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
+    margin-top: 0px;
   }
 } 
 
@@ -420,7 +435,7 @@ input[data-error]::after {
   color: #fff;
   position: relative;
   text-align: left;
-  min-width: 424px;
+ /* min-width: 0px;*/
 }
 .hero-content::after {
   content: "";
@@ -469,6 +484,7 @@ input[data-error]::after {
   font-size: 1rem;
   margin: 60px 0 30px;
   font-weight: bolder;
+  text-align: center;
 }
 .hero-section > .btn-signup {
   display: none;
@@ -505,15 +521,37 @@ footer {
   color: #fff;
   padding-top: 10px;
 }
-@media screen and (max-width: 800px) {
+/****** RESPONSIVE ******/
+
+@media screen and (max-width: 767px) {
+ /*
+  
+  .icon {
+    padding: 0;
+    position: relative;
+    top: 0.5rem;
+  }*/
+  .header-logo {
+    width: 100%;
+  }
+
+  i.fa .fa-bars {
+    width: 50px;
+  }
+  .header-logo img {
+    width: 100%;
+    
+  }
   .hero-section {
     display: block;
     box-shadow: unset;
+    width: 100%;
   }
   .hero-content {
     background: #fff;
     color: #000;
     padding: 20px;
+    text-align: center;
   }
   .hero-content::after {
     content: unset;
@@ -522,7 +560,7 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     white-space: normal;
   }
   .hero-text {
@@ -544,6 +582,36 @@ footer {
   }
 }
 
+@media screen and (min-width:768px) and (max-width: 1023px) {
+  .hero-headline {
+    font-size: 4.5rem;
+  }
+  #myTopnav {
+    display: flex;
+    flex-direction: column;
+  }
+  .main-navbar {
+    display: flex;
+    justify-content: center;
+  }
+  .topnav a {
+    font-size: 18px;
+  }
+  .hero-text {
+    width: 14rem;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  #myTopnav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .topnav a {
+    font-size: 20px;
+  }
+}
 @keyframes modalopen {
   from {
     opacity: 0;

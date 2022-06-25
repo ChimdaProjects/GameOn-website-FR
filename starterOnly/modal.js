@@ -31,15 +31,21 @@ function launchModal() {
 // close modal event
 modalBtnClosed.forEach((btn)=> btn.addEventListener("click", closeModal));
 // close modal message confirmation
-closeBtnConf.addEventListener("click", closeModal);
+closeBtnConf.addEventListener("click", closeModalMsg);
 
 // close modal form
 function closeModal() {
   modalbg.style.display="none";
-  // close modal confirmation
-  modalMsg.style.display="none";
-  removeErrorsMsg();
-  clearValuesForm();
-  //location.reload();
+  location.reload();
+  
 }
 
+function closeModalSubmit() {
+  modalbg.style.display="none";
+}
+function closeModalMsg() { 
+    // close modal confirmation
+    modalMsg.style.display="none";
+    removeErrorsMsg();
+    location.reload();
+}
