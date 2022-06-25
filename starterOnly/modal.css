@@ -602,14 +602,14 @@ footer {
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:1024px) and (max-width:1110px) {
   #myTopnav {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
   }
   .topnav a {
-    font-size: 20px;
+    font-size: 17px;
   }
 }
 @keyframes modalopen {
