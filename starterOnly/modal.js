@@ -8,22 +8,16 @@ function editNav() {
   }
 }
 
-
-
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalBtnClosed = document.querySelectorAll(".close");
-// navbar
+// Element of navbar
 const navbar = document.getElementById('myTopnav');
-// background hero-section
+// Element of div class hero-section
 const bgsection = document.getElementsByClassName('hero-section');
-console.log('bgsection', bgsection);
-// background homepage
-const backgroundColorHomePage = document.getElementsByClassName('bground');
-console.log('bg', backgroundColorHomePage);
-// confirmation reservation
+// Elements of confirmation reservation
 const modalMsg = document.querySelector(".confirmation");
 const closeBtnConf = document.getElementById('close-conf');
 const closeBtnMsg = document.getElementById('close-btn');
