@@ -78,10 +78,10 @@ const divCGU = document.getElementById('dataCGU');
  */
 function checkValuesForm(e) {
     const valueField = e.target.value;
+    // en fonction de l'id
     switch(e.target.id) {
         case 'first':
             console.log('on est dans le prénom');  
-            
             console.log('prénom saisie : ', valueField);
             if (valueField.length > 1 && regexName.test(valueField)) {
                 msgFirst.setAttribute('data-error-visible', 'false');
@@ -124,8 +124,8 @@ function checkValuesForm(e) {
             break;
     
         case 'birthdate':
+
             console.log('date entrée : ', valueField)
-            
             let birthdate = new Date(valueField);
             let birthdatepicked = birthdate.toLocaleDateString();
             console.log('birthdate', birthdate.toLocaleDateString())
@@ -159,7 +159,6 @@ function checkValuesForm(e) {
 
         case 'checkbox1':
             
-            
             if (checkboxCGU.checked) {
                 console.log('checked CGU');
                 divCGU.setAttribute('data-error-visible', 'false');
@@ -177,28 +176,35 @@ function checkValuesForm(e) {
         default:console.log('ca ne va pas du tout !')
     }
 }
+/**
+ * On vérifie si une location est cochée
+ */
 
 for (let location of locations) {
+    // pour chaque location on lui associe un écouteur d'évènement
     location.addEventListener('change', checkRadiosLocations);    
     function checkRadiosLocations() {
         console.log('on est dans check radio')
-       
-    
+        // on vérifie si une location est cochée
         if(location.checked) {
             console.log('ville selectionnée', location.value);
+            // le message d'erreur ne s'affiche pas
             divLocations.setAttribute('data-error-visible', 'false');
-             checkLocations = true;
+            checkLocations = true;
         } else {
-        divLocations.setAttribute('data-error-visible', 'true');
-        divLocations.setAttribute('data-error', errorsMsg.location);
+            // sinon le message d'erreur s'affiche
+            divLocations.setAttribute('data-error-visible', 'true');
+            divLocations.setAttribute('data-error', errorsMsg.location);
             checkLocations= false;
         } ;
     console.log('check location', checkLocations) ;       
     }
-
 }
 console.log('check location ', checkLocations);   
 
+/**
+ * Cette fonction permet d'enlever les messages d'erreur
+ */
 function removeErrorsMsg() {
     let alertMessages = document.getElementsByClassName("formData");
     for (let alert of alertMessages) {
@@ -220,6 +226,9 @@ function clearValuesForm() {
     checkboxCGU.checked =false;
 }
 
+/**
+ * Cette fonction permet d'ouvrir la modale du message de confirmation
+ */
 function openModalConfirmation () {
     modalMsg.style.display="block";
 }
@@ -227,13 +236,12 @@ function openModalConfirmation () {
 /**
  * On place un écouteur d'évènement sur le formulaire pour écouter la soumission.
  */
-form.addEventListener('submit', handleSubmitForm);
+/*form.addEventListener('submit', handleSubmitForm);*/
 
 /**
  * Cette fonction permet la soumission du formulaire
  */
-function handleSubmitForm (e) {
-    e.preventDefault();
+function validate() {
     console.log('on est ds la validation du formulaire')
     if (checkLast && 
         checkFirst && 

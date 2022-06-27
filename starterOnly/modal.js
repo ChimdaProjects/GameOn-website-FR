@@ -38,17 +38,12 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   // display the form
   modalbg.style.display = "block";
-  // not display the navbar
-  if (window.matchMedia("(min-width: 768px)").matches) {
-    navbar.style.visibility ="hidden";
-  } else {
-    navbar.style.display ="flex";
-    
+  // not display the navbar if max width more than 768px
+  const mediaSize = window.matchMedia("(min-width:500px) and (max-width: 767px)");
+  function changeBackgroundModal() {
+    bgsection[0].style.display="none";
   }
-  // not display the background of the homepage
-  bgsection[0].style.visibility ="hidden";
-  backgroundColorHomePage[0].style.backgroundColor='white';
-  
+  mediaSize.addEventListener('change', changeBackgroundModal) ;
 }
 
 
