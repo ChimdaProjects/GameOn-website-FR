@@ -1,3 +1,4 @@
+
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -7,14 +8,25 @@ function editNav() {
   }
 }
 
+
+
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalBtnClosed = document.querySelectorAll(".close");
+// navbar
+const navbar = document.getElementById('myTopnav');
+// background hero-section
+const bgsection = document.getElementsByClassName('hero-section');
+console.log('bgsection', bgsection);
+// background homepage
+const backgroundColorHomePage = document.getElementsByClassName('bground');
+console.log('bg', backgroundColorHomePage);
 // confirmation reservation
 const modalMsg = document.querySelector(".confirmation");
 const closeBtnConf = document.getElementById('close-conf');
+const closeBtnMsg = document.getElementById('close-btn');
 
 // not display confirmation modal
 modalMsg.style.display="none";
@@ -24,15 +36,30 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // launch modal form
 function launchModal() {
+  // display the form
   modalbg.style.display = "block";
+  // not display the navbar
+  if (window.matchMedia("(min-width: 768px)").matches) {
+    navbar.style.visibility ="hidden";
+  } else {
+    navbar.style.display ="flex";
+    
+  }
+  // not display the background of the homepage
+  bgsection[0].style.visibility ="hidden";
+  backgroundColorHomePage[0].style.backgroundColor='white';
+  
 }
+
+
 
 // issue #1: fermer la modale 
 // close modal event
 modalBtnClosed.forEach((btn)=> btn.addEventListener("click", closeModal));
 // close modal message confirmation
 closeBtnConf.addEventListener("click", closeModalMsg);
-
+// close modal message confirmation by button "fermer"
+closeBtnMsg.addEventListener("click", closeModalMsg);
 // close modal form
 function closeModal() {
   modalbg.style.display="none";

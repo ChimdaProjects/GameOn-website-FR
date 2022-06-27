@@ -1,14 +1,3 @@
-/**
- * Les données doivent être saisies correctement :
-(1) Le champ Prénom a un minimum de 2 caractères / n'est pas vide.
-(2) Le champ du nom de famille a un minimum de 2 caractères / n'est pas vide.
-(3) L'adresse électronique est valide.
-(4) Pour le nombre de concours, une valeur numérique est saisie.
-(5) Un bouton radio est sélectionné.
-(6) La case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée.
-Conserver les données du formulaire (ne pas effacer le formulaire) lorsqu'il ne passe pas la validation.
- */
-
 // Récupération du formulaire
 const form = document.querySelector('form');
 
@@ -55,8 +44,6 @@ const regexBirthDate =/\b(\d{4})[-/.](\d{2})[-/.](\d{2})\b/;
 //regex pour les nombres entiers
 const regexNumbers = /^\d{1,2}$/;
 
-//const inputsForm = document.querySelectorAll('input');
-//console.log('inputs form', inputsForm);
 /**
  * On ajoute un écouteur d'évènements sur tous les inputs du formulaire.
  */
@@ -67,10 +54,6 @@ const inputsForm = [
 for( let input of inputsForm) {
     input.addEventListener('change', checkValuesForm);
 }
-
-/*inputsForm.forEach(e => {
-    e.addEventListener('change', checkValuesForm)
-});*/
 
 // variables permettant de savoir si un champ du formulaire est rempli correctement.
 checkFirst=false;
@@ -235,8 +218,6 @@ function clearValuesForm() {
         location.checked = false;
     }
     checkboxCGU.checked =false;
-
-
 }
 
 function openModalConfirmation () {
@@ -244,19 +225,16 @@ function openModalConfirmation () {
 }
 
 /**
+ * On place un écouteur d'évènement sur le formulaire pour écouter la soumission.
+ */
+form.addEventListener('submit', handleSubmitForm);
+
+/**
  * Cette fonction permet la soumission du formulaire
  */
-form.addEventListener('submit', handleSubmitForm)
 function handleSubmitForm (e) {
     e.preventDefault();
-    console.log('on est ds validate')
-   /*alert( checkLast );
-   alert( checkFirst );
-   alert(checkEmail );
-   alert( checkBirthDate );
-   alert( checkQuantity );
-   alert(checkLocations );
-   alert(checkCgu );*/
+    console.log('on est ds la validation du formulaire')
     if (checkLast && 
         checkFirst && 
         checkEmail &&
@@ -265,16 +243,19 @@ function handleSubmitForm (e) {
         checkLocations &&
         checkCgu ) {
         console.log('submit form');
-        //alert('formulaire soumis');
+        // on appelle cette fonction pour fermer la modale à la soumission
         closeModalSubmit();
+        // on appelle cette fonction pour effacer les messages d'erreurs lors de la soumission du formulaire
         removeErrorsMsg();
+        // on appelle cette fonction pour effacer les valeurs du formulaire après soumission
         clearValuesForm();
+        // on appelle cette fonction pour ouvrir la modale avec le message de confirmation
         openModalConfirmation();
-        
-        //form.submit();
         return false;
     } else {
+        // on vérifie si les champs sont vides
         if(!checkLast) {
+            // on affiche le message d'erreur
             divLast.setAttribute('data-error-visible', 'true');
             divLast.setAttribute('data-error', errorsMsg.last);
         }

@@ -62,17 +62,35 @@ img {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
+  text-decoration: underline;
 }
 
 .topnav .icon {
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+/********************* MEDIA QUERIES MOBILE ************************/
+@media screen and (max-width: 540px) {
+  .topnav a {
+    display: none;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+    margin-top: 0px;
+  }
+} 
+
+@media screen and (max-width: 767px) {
   #myTopnav {
     display: flex;
     justify-content: center;
     align-items: center;
+    
+  }
+  .topnav {
+    margin: 1rem 20px;
+    padding-left: 2vw;
   }
   .topnav a {
     display: none;
@@ -84,6 +102,9 @@ img {
   .main-navbar {
     width: 100%;
    
+  }
+  .fa-bars {
+    color: red;
   }
 }
 
@@ -103,18 +124,7 @@ img {
   }
 }
 
-
-
- @media screen and (max-width: 540px) {
-  .topnav a {
-    display: none;
-  }
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: 0px;
-  }
-} 
+/****************************************************************/
 
 main {
   font-size: 130%;
@@ -420,7 +430,7 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  min-height: 93vh;
+  /*min-height: 93vh;*/
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -497,7 +507,7 @@ footer {
 
 /**** MODAL CONFIRMATION ***/
 .confirmation {
-  display: none;
+  display: visible;
   position: fixed;
   z-index: 6;
   left: 0%;
@@ -505,13 +515,22 @@ footer {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(178, 185, 243, 0.6);
+  background-color: white;
+  display: flex;
+  
 }
-
+.modal-conf {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /*height: 100vh;*/
+  margin-top: 60%;
+}
 .content-conf {
-  margin: 10% auto;
-  width: 100%;
+  margin: 3rem auto;
+  width: 100vw;
   max-width: 500px;
+  height: 90%;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
   background: #232323;
@@ -521,27 +540,42 @@ footer {
   color: #fff;
   padding-top: 10px;
 }
+
+.btn-close {
+  background: #fe142f;
+  display: block;
+  margin: 100% auto;
+  margin-top: 80%;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  padding: 12px 0px;
+  color: #fff;
+  cursor: pointer;
+  border: 0;
+  text-align: center;
+  width: 50%;
+
+  
+}
+
+.modal-text {
+  display: flex;
+  justify-content: center;
+  font-weight: normal;
+  font-size: 2rem;
+  text-align: center;
+}
 /****** RESPONSIVE ******/
 
 @media screen and (max-width: 767px) {
- /*
-  
-  .icon {
-    padding: 0;
-    position: relative;
-    top: 0.5rem;
-  }*/
   .header-logo {
     width: 100%;
   }
 
-  i.fa .fa-bars {
-    width: 50px;
-  }
   .header-logo img {
     width: 100%;
-    
   }
+
   .hero-section {
     display: block;
     box-shadow: unset;
@@ -550,9 +584,9 @@ footer {
   .hero-content {
     background: #fff;
     color: #000;
-    padding: 20px;
-    text-align: center;
+    padding: 0px;
   }
+
   .hero-content::after {
     content: unset;
   }
@@ -560,12 +594,14 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 3.5rem;
+    font-size: 2rem;
     white-space: normal;
+    font-weight: bold;
   }
   .hero-text {
     width: unset;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    margin-top: 1.5rem;
   }
   .hero-img img {
     border-radius: 10px;
@@ -575,6 +611,12 @@ footer {
     display: block;
     margin: 32px auto 10px;
     padding: 12px 35px;
+  }
+  .btn-close {
+    margin-top: 80%;
+  }
+  .btn-signup {
+    font-size: 1rem;
   }
   .copyrights {
     margin-top: 50px;
@@ -600,6 +642,12 @@ footer {
   .hero-text {
     width: 14rem;
   }
+  .btn-close {
+    margin-top: 80%;
+  }
+  .btn-signup {
+    width: 160px;
+  }
 }
 
 @media screen and (min-width:1024px) and (max-width:1110px) {
@@ -611,6 +659,10 @@ footer {
   .topnav a {
     font-size: 17px;
   }
+  .btn-close {
+    margin-top: 79%;
+  }
+
 }
 @keyframes modalopen {
   from {
