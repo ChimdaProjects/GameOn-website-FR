@@ -80,7 +80,7 @@ function checkValuesForm(e) {
     const valueField = e.target.value;
     // en fonction de l'id
     switch(e.target.id) {
-        case 'first':
+        case 'first': // prénom
             console.log('on est dans le prénom');  
             console.log('prénom saisie : ', valueField);
             if (valueField.length > 1 && regexName.test(valueField)) {
@@ -94,7 +94,7 @@ function checkValuesForm(e) {
             console.log('checkfirst :', checkFirst);
             break;
         
-        case 'last':
+        case 'last': // nom
             
             console.log('nom saisi : ', valueField);
             if (valueField.length > 1 && regexName.test(valueField)) {
@@ -108,7 +108,7 @@ function checkValuesForm(e) {
             console.log('checkfirst :', checkFirst);
             break;
 
-        case 'email':
+        case 'email': // email
             
             console.log('email saisi : ', valueField);
             // si la valeur saisie est vide
@@ -123,7 +123,7 @@ function checkValuesForm(e) {
             console.log('checkEmail : ', checkEmail);
             break;
     
-        case 'birthdate':
+        case 'birthdate': // date de naissance
 
             console.log('date entrée : ', valueField)
             let birthdate = new Date(valueField);
@@ -142,7 +142,7 @@ function checkValuesForm(e) {
             console.log('check birthdate :' , checkBirthDate);
             break;
      
-        case 'quantity':
+        case 'quantity': //  nombre de tournois
             
             console.log('quantity', valueField);
             if( !isNaN(valueField) && regexNumbers.test(valueField)) {
@@ -157,7 +157,7 @@ function checkValuesForm(e) {
             console.log('check quantity : ', checkQuantity);
             break;
 
-        case 'checkbox1':
+        case 'checkbox1': // checkbox conditions générales d'utilisation
             
             if (checkboxCGU.checked) {
                 console.log('checked CGU');
@@ -173,7 +173,7 @@ function checkValuesForm(e) {
             console.log('check cgu ', checkCgu );
             break;
 
-        default:console.log('ca ne va pas du tout !')
+        default: console.log('ca ne va pas du tout !');
     }
 }
 /**
@@ -202,6 +202,23 @@ for (let location of locations) {
 }
 console.log('check location ', checkLocations);   
 
+/**
+ * Cette fonction permet de vérifier si la checkbox CGU est cochée et de nous retourner le résultat de la variable checkCgu.
+ */
+function checkCheckboxCgu() {
+    if (checkboxCGU.checked) {
+        console.log('checked CGU');
+        divCGU.setAttribute('data-error-visible', 'false');
+        checkCgu = true;
+        
+    } else {
+        divCGU.setAttribute('data-error-visible', 'true');
+        divCGU.setAttribute('data-error', errorsMsg.checkbox);
+        console.log('pas checked CGU');
+        checkCgu = false;
+    };
+}
+checkCheckboxCgu();
 /**
  * Cette fonction permet d'enlever les messages d'erreur
  */
@@ -234,15 +251,10 @@ function openModalConfirmation () {
 }
 
 /**
- * On place un écouteur d'évènement sur le formulaire pour écouter la soumission.
- */
-/*form.addEventListener('submit', handleSubmitForm);*/
-
-/**
  * Cette fonction permet la soumission du formulaire
  */
 function validate() {
-    console.log('on est ds la validation du formulaire')
+    // on vérifie si les variables sont égales à true et remplies donc les conditions de validation alors on soumet le formulaire.
     if (checkLast && 
         checkFirst && 
         checkEmail &&
@@ -259,40 +271,43 @@ function validate() {
         clearValuesForm();
         // on appelle cette fonction pour ouvrir la modale avec le message de confirmation
         openModalConfirmation();
+        // on return false pour pouvoir faire apparaître la modale de confirmation
         return false;
     } else {
-        // on vérifie si les champs sont vides
-        if(!checkLast) {
+        // Ici, si les variables sont égales à false et ne repondent aux conditions de validation du formulaire
+        if(!checkLast) { // vérification du prénom
             // on affiche le message d'erreur
             divLast.setAttribute('data-error-visible', 'true');
+            // on attribue le message d'erreur qui est dans l'objet errorMsg correspondant
             divLast.setAttribute('data-error', errorsMsg.last);
         }
-        if(!checkFirst) {
+        if(!checkFirst) { // vérification du champ prénom
             msgFirst.setAttribute('data-error-visible', 'true');
             msgFirst.setAttribute('data-error', errorsMsg.first);
         }
-        if(!checkEmail) {
+        if(!checkEmail) { // vérification du  champ email
             divEmail.setAttribute('data-error-visible', 'true');
             divEmail.setAttribute('data-error', errorsMsg.email);
         }
-        if(!checkBirthDate) {
+        if(!checkBirthDate) { // vérification du champ date de naissance
             divBirthDate.setAttribute('data-error-visible', 'true');
             divBirthDate.setAttribute('data-error', errorsMsg.birthdate);
 
         }
-        if(!checkQuantity) {
+        if(!checkQuantity) { // vérification du champ quantité
             divContest.setAttribute('data-error-visible', 'true');
             divContest.setAttribute('data-error', errorsMsg.quantity);
 
         }
-        if(!checkLocations) {
+        if(!checkLocations) { // vérification si une option a été cochée 
             divLocations.setAttribute('data-error-visible', 'true');
         divLocations.setAttribute('data-error', errorsMsg.location);
         }
-        if(!checkCgu) {
+        if(!checkCgu) { // vérification du champ conditions d'utilisation
             divCGU.setAttribute('data-error-visible', 'true');
             divCGU.setAttribute('data-error', errorsMsg.checkbox);
         }
+        // on retourne false pour rester sur la page du formulaire
         return false;
     }
         
@@ -318,171 +333,3 @@ function validate() {
 
 
 
-
-
-
-// Ecouteurs d'évènements
-/*firstName.addEventListener('change', checkFirstName);
-lastName.addEventListener('change', checkLastName);
-email.addEventListener('change', checkEmail);
-birthdayDate.addEventListener('change', checkBirthDate);
-quantityContest.addEventListener('change', checkNumberOfContest);
-checkboxCGU.addEventListener('change', checkCGU);*/
-
-/**
- * Cette fonction permet de vérifier le prénom
- * @param {Event} e 
- * @returns 
- */
-/*function checkFirstName(e) {
-   console.log(e.target.id)
-    const valueFirst = e.target.value;
-
-    const divFirst = document.getElementById('dataFirst');
-    console.log('prénom saisie : ', valueFirst);
-    if (valueFirst.length > 1 && regexName.test(valueFirst)) {
-        divFirst.setAttribute('data-error-visible', 'false');
-        return true;
-    } else {
-        divFirst.setAttribute('data-error-visible', 'true');
-        divFirst.setAttribute('data-error', errorsMsg.first);
-        return false;
-    }
-
-}
-
-/**
- * Cette fonction permet de vérifier le nom
- * @param {Event} e 
- * @returns 
- */
-/*function checkLastName (e) {
-    const valueLast = e.target.value;
-    const divLast = document.getElementById('dataLast');
-    console.log('nom saisi : ', valueLast);
-    if (valueLast.length > 1 && regexName.test(valueLast)) {
-        divLast.setAttribute('data-error-visible', 'false');
-        return true;
-    } else {
-        divLast.setAttribute('data-error-visible', 'true');
-        divLast.setAttribute('data-error', errorsMsg.last);
-        return false;
-    }
-}
-
-
-/**
- * Cette fonction permet de vérifier l'adresse mail
- * @param {Event} e 
- * @returns 
- */
-/*function checkEmail(e) {
-    const valueEmail = e.target.value;
-    const divEmail = document.getElementById('dataEmail');
-    console.log('email saisi : ', valueEmail);
-    // si la valeur saisie est vide
-    if (valueEmail!=='' && regexEmail.test(valueEmail)) {
-        divEmail.setAttribute('data-error-visible', 'false');
-        return true;
-    } else {
-        divEmail.setAttribute('data-error-visible', 'true');
-        divEmail.setAttribute('data-error', errorsMsg.email);
-        return false;
-    }
-}
-
-/**
- * Cette fonction permet de vérifier la date de naissance
- * @param {Event} e event
- */
-
-// date du jour
-// 
-
-/*function checkBirthDate (e) {
-    const valueBirthDate = e.target.value;
-
-    console.log('date entrée : ', valueBirthDate)
-    const divBirthDate = document.getElementById('dataBirth');
-    
-    if( regexBirthDate.test(valueBirthDate) ) {
-        divBirthDate.setAttribute('data-error-visible', 'false');
-        return  true;
-    } else {
-        divBirthDate.setAttribute('data-error-visible', 'true');
-        divBirthDate.setAttribute('data-error', errorsMsg.birthdate);
-        return false;
-    }
-
-}
-
-/**
- * Cette fonction permet de vérifier le nombre de tournoi
- * @param {Event} e event
- */
-
-/*function checkNumberOfContest(e) {
-    const valueQuantity = e.target.value;
-    const divContest = document.getElementById('dataContest')
-
-    if( !isNaN(valueQuantity) && regexNumbers.test(valueQuantity)) {
-        divContest.setAttribute('data-error-visible', 'false');
-        return true;
-    } else {
-        divContest.setAttribute('data-error-visible', 'true');
-        divContest.setAttribute('data-error', errorsMsg.quantity);
-
-        return false;
-    }
-}
-
-/**
- * Cette fonction permet de vérifier si une ville est bien choisie
- */
-/*console.log('les villes', locations);
-
-for (let location of locations) {
-    location.addEventListener('change', checkRadiosLocations);    
-    function checkRadiosLocations() {
-        const divLocations = document.getElementById('dataLocations');
-    
-        if(location.checked) {
-            console.log('ville selectionnée', location.value);
-            divLocations.setAttribute('data-error-visible', 'false');
-            return true;
-        } else {
-        divLocations.setAttribute('data-error-visible', 'true');
-        divLocations.setAttribute('data-error', errorsMsg.location);
-        return false;
-        } ;
-           
-    }
-   
-}
-
-checkRadiosLocations();
-
-/**
- * Cette fonction permet de vérifier si la checkbox CGU est cochée
- */
-
-/*
-function checkCGU(e) {
-    const valueChecked = e.target.value;
-    const divCGU = document.getElementById('dataCGU');
-    if (checkboxCGU.checked) {
-        console.log('checked CGU');
-        divCGU.setAttribute('data-error-visible', 'false');
-        return true;
-        
-    } else {
-        divCGU.setAttribute('data-error-visible', 'true');
-        divCGU.setAttribute('data-error', errorsMsg.checkbox);
-        console.log('pas checked CGU');
-        return false;
-
-    }
-}
-/**
- * Cette fonction permet de supprimer les messages d'erreurs
- */

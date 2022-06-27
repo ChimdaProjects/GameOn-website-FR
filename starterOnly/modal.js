@@ -46,8 +46,6 @@ function launchModal() {
   mediaSize.addEventListener('change', changeBackgroundModal) ;
 }
 
-
-
 // issue #1: fermer la modale 
 // close modal event
 modalBtnClosed.forEach((btn)=> btn.addEventListener("click", closeModal));

@@ -40,6 +40,7 @@ img {
 .main-navbar {
     float: right;
 }
+
 .topnav a {
   float: left;
   display: block;
@@ -62,8 +63,12 @@ img {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
-  text-decoration: underline;
+  
 }
+ .main-navbar a.active span {
+  padding-bottom: 0.1rem;
+  border-bottom: 1px solid white;
+ }
 
 .topnav .icon {
   display: none;
@@ -688,11 +693,13 @@ footer {
   }
 
 }
-@media  screen and (min-width: 768px) and (max-width: 1300px) {
+@media  screen and (min-width: 768px) and (max-width: 2400px) {
   .bground {
     background-color: white;
   }
 }
+
+/*** ANIMATION of MODAL ***/
 @keyframes modalopen {
   from {
     opacity: 0;
