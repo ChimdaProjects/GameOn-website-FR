@@ -32,6 +32,9 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   // display the form
   modalbg.style.display = "block";
+  // hide the copyright when the modal form is launching
+  const copyrightElt = document.querySelector(".copyrights");
+  copyrightElt.style.display= "none";
   // not display the navbar if max width more than 768px
   const mediaSize = window.matchMedia("(min-width:500px) and (max-width: 767px)");
   function changeBackgroundModal() {
@@ -47,16 +50,25 @@ modalBtnClosed.forEach((btn)=> btn.addEventListener("click", closeModal));
 closeBtnConf.addEventListener("click", closeModalMsg);
 // close modal message confirmation by button "fermer"
 closeBtnMsg.addEventListener("click", closeModalMsg);
-// close modal form
+
+/**
+ * close modal form 
+ */
 function closeModal() {
   modalbg.style.display="none";
   location.reload();
-  
 }
 
+/**
+ * Cette fonction permet de fermer la modale lors de la soumission.
+ */
 function closeModalSubmit() {
   modalbg.style.display="none";
 }
+
+/**
+ * Cette fonction permet de fermer la modale avec le message de confirmation de la réservation.
+ */
 function closeModalMsg() { 
     // close modal confirmation
     modalMsg.style.display="none";

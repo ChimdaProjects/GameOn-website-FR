@@ -156,11 +156,7 @@ function checkValuesForm(e) {
         // par défaut on applique le console.log
         default: console.log('ca ne va pas du tout !');
     }
-}
-/**
- * On vérifie si une location est cochée
- */
-function checkLocationsOptions() {
+    // on vérifie si une option des locations est cochée
     for (let location of locations) {
         // pour chaque location on lui associe un écouteur d'évènement
         location.addEventListener('change', checkRadiosLocations);    
@@ -180,9 +176,9 @@ function checkLocationsOptions() {
     }
 }
 
-
 /**
  * Cette fonction permet de vérifier si la checkbox CGU est cochée et de nous retourner le résultat de la variable checkCgu.
+ * Cette coche est cochée par défaut.
  */
 function checkCheckboxCgu() {
     if (checkboxCGU.checked) {
@@ -231,9 +227,7 @@ function openModalConfirmation () {
  * Cette fonction permet la soumission du formulaire
  */
 function validate() {
-    // on appelle la fonction qui permet de vérifier si une location est bien cochée.
-    checkLocationsOptions();
-    // on appelle la fonction qui permet de vérifier si la checkbox CGU est cochée.
+    // on appelle la fonction qui permet de vérifier si la checkbox CGU est cochée dans le cas où on ne la décoche car elle y est par défaut.
     checkCheckboxCgu();
     // on vérifie si les variables sont égales à true et remplies donc les conditions de validation
     // si c'est le cas, alors on soumet le formulaire.
@@ -250,12 +244,12 @@ function validate() {
         removeErrorsMsg();
         // on appelle cette fonction pour effacer les valeurs du formulaire après soumission
         clearValuesForm();
-        // on appelle cette fonction pour ouvrir la modale avec le message de confirmation
+        // on appelle cette fonction pour afficher la modale avec le message de confirmation
         openModalConfirmation();
         // on return false pour pouvoir faire apparaître la modale de confirmation
         return false;
     } else {
-        // Ici, si les variables sont égales à false et ne repondent pas aux conditions de validation du formulaire
+        // Ici, si une des variables est égale à false et ne repond pas aux conditions de validation du formulaire
         if(!checkLast) { // vérification du prénom
             // on affiche le message d'erreur
             msgLast.setAttribute('data-error-visible', 'true');
