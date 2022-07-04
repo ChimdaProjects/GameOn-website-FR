@@ -41,6 +41,5 @@ Tester toutes les fonctionnalités des boutons et des entrées de formulaire (te
 
 ### Formulaire d'inscription
 
-<img src="./starterOnly/assets/img/formulaire.png" alt="form" width="220" height="350"/>       
-<img src="./starterOnly/assets/img/form_erreur.png" alt="form_error" width="250" height="350"/>
+<img src="./starterOnly/assets/img/formulaire.png" alt="form" width="220" height="350"/>  <img src="./starterOnly/assets/img/form_erreur.png" alt="form_error" width="250" height="350"/>
 
