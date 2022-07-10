@@ -221,6 +221,7 @@ function clearValuesForm() {
  */
 function openModalConfirmation () {
     modalMsg.style.display="block";
+    bgsection[0].style.display="none";
 }
 
 /**
