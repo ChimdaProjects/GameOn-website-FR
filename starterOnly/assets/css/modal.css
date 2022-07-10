@@ -471,7 +471,7 @@ footer {
   flex-direction: column;
   justify-content: space-around;
   /*height: 100vh;*/
-  margin-top: 60%;
+  margin-top: 50%;
 }
 .content-conf {
   margin: 3rem auto;
@@ -510,9 +510,21 @@ footer {
   font-weight: normal;
   font-size: 2rem;
   text-align: center;
+  position:absolute;
+  top: 40%;
+  left:27%;
 }
 
 /********************* MEDIA QUERIES MOBILE ************************/
+@media screen and (max-width:320px) {
+  .modal-text {
+    top:40%;
+    left:15%;
+  }
+  .modal-conf {
+    margin-top:80%;
+  }
+}
 @media screen and (max-width: 540px) {
   .header-logo img {
     width: 100%;
@@ -645,7 +657,7 @@ footer {
     margin: 0;
   } 
   .btn-close {
-    margin-top: 80%;
+    margin-top: 75%;
   }
   .btn-signup {
     font-size: 1rem;
