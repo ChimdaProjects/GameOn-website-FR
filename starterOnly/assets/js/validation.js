@@ -121,7 +121,7 @@ function checkValuesForm(e) {
             let birthdate = new Date(valueField);
             let birthdatepicked = birthdate.toLocaleDateString();
             let today = new Date().toLocaleDateString();
-            if( regexBirthDate.test(valueField) && birthdatepicked <= today) {
+            if( regexBirthDate.test(valueField) /*&& birthdatepicked <= today*/) {
                 msgBirthDate.setAttribute('data-error-visible', 'false');
                 checkBirthDate = true;
             } else {
